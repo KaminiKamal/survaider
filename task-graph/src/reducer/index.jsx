@@ -1,36 +1,53 @@
-import { DISPLAY_GENDER_GRAPH, DISPLAY_RELATION_LIST } from '../constant/constant.jsx';
 import React, { Component } from 'react';
-import {PieChart} from 'react-easy-chart';
-import {BarChart} from 'react-easy-chart';
+import { PieChart } from 'react-easy-chart';
+import { BarChart } from 'react-easy-chart';
+import { DISPLAY_GENDER_GRAPH, DISPLAY_RELATION_LIST } from "../constant/constant.jsx";
 
-export default (state = [], action) => {
+export default ( state = [], action ) =>
+{
 
-  switch(action.type) {
+  switch( action.type )
+  {
 
 			case  DISPLAY_RELATION_LIST:
-				const {responseData} = action;console.log("responseData", responseData);
+				const { responseData } = action;
+        console.log("responseData", responseData);
+
 				let not_in_family = 0;
 				let wife = 0;
 				let husband = 0;
 				let counter_male = 0;
 				let counter_female = 0;
-				responseData.forEach((el, i) => {
-					if(el.sex==="Male"){
+
+				responseData.forEach(( el, i ) =>
+        {
+					if( el.sex === "Male" )
+          {
 						counter_male++;
 					}
-					if(el.sex=="Female"){
+
+					if( el.sex === "Female" )
+          {
 						counter_female++;
 					}
-					if(el.relationship==="Not-in-family"){
+
+					if (el.relationship === "Not-in-family")
+          {
 						not_in_family++;
 					}
-					if(el.relationship==="Wife"){
+
+					if(el.relationship === "Wife")
+          {
 						wife++;
 					}
-					if(el.relationship=="Husband"){
+
+					if(el.relationship === "Husband")
+          {
 						husband++;
 					}
+
 				});
+
 				let total_ppl = not_in_family + wife + husband;
 				let not_in_family_per = (not_in_family/total_ppl)*100;
 				let wife_per = (wife/total_ppl)*100;
@@ -42,40 +59,86 @@ export default (state = [], action) => {
 
 				const graph_pie = (<PieChart
 														labels
-													data={[
-													{ key: 'Male', value: per_male, color: '#aaac84' },
-													{ key: 'Female', value: per_female, color: '#dce7c5' }
-													]}
-													innerHoleSize={200}
-													padding={10}
-													styles={this.styles}
+													data=
+                          {
+                            [
+    													{
+                                key: 'Male 71%',
+                                value: per_male,
+                                color: '#aaac84'
+                              },
+
+    													{
+                                key: 'Female 29%',
+                                value: per_female,
+                                color: '#dce7c5'
+                              }
+													]
+                          }
+													innerHoleSize =
+                          {
+                            200
+                          }
+													padding =
+                          {
+                            10
+                          }
+													styles =
+                          {
+                            this.styles
+                          }
 													/>);
 
 				const bar_graph = (<BarChart
-				  axisLabels={{x: 'My x Axis', y: 'My y Axis'}}
+				  axisLabels =
+          {
+            {
+              x: 'My x Axis',
+              y: 'My y Axis'
+            }
+          }
 				  axes
 				  grid
 				  colorBars
-				  height={500}
-				  width={300}
-				  data={[
-				   {
-				     x: 'Not-in-family',
-				     y: not_in_family_per
-				   },
-				   {
-				     x: 'Wife',
-				     y: wife_per
-				   },
-					 {
-						x: 'Husband',
-						y: husband_per
-					}
-				  ]}
+				  height =
+          {
+            500
+          }
+
+				  width =
+          {
+            300
+          }
+
+				  data =
+          {
+            [
+  				   {
+  				     x: 'Not-in-family',
+  				     y: not_in_family_per
+  				   },
+
+  				   {
+  				     x: 'Wife',
+  				     y: wife_per
+  				   },
+
+  					 {
+  						x: 'Husband',
+  						y: husband_per
+  					}
+
+				  ]
+        }
 				/>);
-				return {"responseData" : bar_graph, "responseInfo" : graph_pie}
+
+				return {
+          "responseData" : bar_graph,
+          "responseInfo" : graph_pie
+        }
 
     default:
       return state;
+
   }
 }

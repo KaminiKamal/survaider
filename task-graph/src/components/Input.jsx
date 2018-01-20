@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 
-
 class List extends Component {
 constructor(props){
   super(props);
 }
 
     render(){
+    let style = {
+    "padding" : "20px",
+    "float" : "left"
+    }
       return (
         <div className="collection">
         <a href="#!" className="collection-item active">
